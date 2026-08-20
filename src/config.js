@@ -1,13 +1,19 @@
-// Minimal .env loader (no external dependencies available).
+// Minimal .env loader (no external dependencies available). Only relevant
+// for non-Netlify hosting (server.js) — on Netlify, env vars are provided by
+// the platform directly and no .env file exists.
+//
+// Deliberately avoids declaring `__dirname` here: Netlify's function bundler
+// (esbuild) auto-injects its own `__dirname` shim into bundled ESM functions
+// for Node compatibility, and a second top-level `const __dirname = ...`
+// declaration collides with it — a SyntaxError that crashes the function on
+// every invocation. Using a `new URL(...)` relative to import.meta.url
+// avoids needing the identifier at all.
 import { readFileSync, existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const envPath = path.join(__dirname, '..', '.env');
+const envUrl = new URL('../.env', import.meta.url);
 
-if (existsSync(envPath)) {
-  const raw = readFileSync(envPath, 'utf8');
+if (existsSync(envUrl)) {
+  const raw = readFileSync(envUrl, 'utf8');
   for (const line of raw.split('\n')) {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith('#')) continue;
