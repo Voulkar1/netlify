@@ -1,0 +1,18 @@
+{
+  "name": "team-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Team attendance & schedule tracker (on/off/holiday/MIA/late) with role-based login. Deploys to Netlify with Netlify DB (Postgres).",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seed.js"
+  },
+  "dependencies": {
+    "@netlify/database": "latest"
+  }
+}
