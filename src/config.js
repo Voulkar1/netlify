@@ -36,4 +36,6 @@ export const config = {
   appTz: process.env.APP_TZ || 'America/Mexico_City',
   sessionSecret: process.env.SESSION_SECRET || 'dev-secret-change-me',
   cookieSecure: (process.env.COOKIE_SECURE || 'false').toLowerCase() === 'true',
+  teamAccessCode: process.env.TEAM_ACCESS_CODE || '',
+  teamAccessSecret: process.env.TEAM_ACCESS_SECRET || process.env.SESSION_SECRET || 'dev-secret-change-me',
 };

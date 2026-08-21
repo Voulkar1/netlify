@@ -5,7 +5,7 @@ import { sendJson } from './router.js';
 export function requireRole(roles, handler) {
   return async (req, res, ctx) => {
     if (!ctx.user) {
-      return redirect(res, '/login');
+      return redirect(res, '/admin/login');
     }
     if (!roles.includes(ctx.user.role)) {
       res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -21,6 +21,13 @@ export function requireRoleApi(roles, handler) {
   return async (req, res, ctx) => {
     if (!ctx.user) return sendJson(res, 401, { error: 'Not authenticated.' });
     if (!roles.includes(ctx.user.role)) return sendJson(res, 403, { error: 'Not authorized.' });
+    return handler(req, res, ctx);
+  };
+}
+
+export function requireTeamAccess(handler) {
+  return async (req, res, ctx) => {
+    if (!ctx.teamAccess) return redirect(res, '/');
     return handler(req, res, ctx);
   };
 }

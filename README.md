@@ -62,6 +62,14 @@ logins and reset passwords from **User Accounts**; deactivate the demo employees
 
 ## Deploying to Netlify
 
+### Team portal access
+
+Set `TEAM_ACCESS_CODE` to the shared code distributed to employees and set `TEAM_ACCESS_SECRET`
+to a long, random value used to sign the seven-day team-access cookie. Neither value is sent to
+the browser or stored in the repository. General employees enter through `/access`; existing
+manager and administrator email/password authentication remains available at `/admin/login`.
+No database migration is required for team access.
+
 1. Push this folder to a GitHub (or GitLab) repository — Netlify builds from a connected repo.
 2. In the Netlify dashboard: **Add new site** → **Import an existing project**, and point it at
    that repo. Netlify reads `netlify.toml` (publish directory, functions directory) automatically.

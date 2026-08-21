@@ -11,6 +11,12 @@ import { layout, esc, redirect } from '../render.js';
 import { readForm } from '../router.js';
 
 export function registerAuthRoutes(router) {
+  router.get('/admin/login', async (req, res, ctx) => {
+    if (ctx.user) return redirect(res, homeFor(ctx.user));
+    const error = new URL(req.url, 'http://x').searchParams.get('error');
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(loginPage({ error }));
+  });
   router.get('/login', async (req, res, ctx) => {
     if (ctx.user) return redirect(res, homeFor(ctx.user));
     const url = new URL(req.url, 'http://x');
@@ -66,8 +72,9 @@ function loginPage({ error }) {
             <span>Password</span>
             <input type="password" name="password" required autocomplete="current-password">
           </label>
-          <button class="btn btn-primary btn-block" type="submit">Log in</button>
+          <button class="btn btn-primary btn-block" type="submit">Log in securely</button>
         </form>
+        <a class="back-link" href="/access">← Back to team access</a>
       </div>
     </div>`,
   });

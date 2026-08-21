@@ -92,6 +92,44 @@ export function clearSessionCookie(res) {
   res.setHeader('Set-Cookie', parts.join('; '));
 }
 
+const TEAM_ACCESS_DAYS = 7;
+
+export function verifyTeamAccessCode(code) {
+  if (!config.teamAccessCode || !code) return false;
+  const expected = Buffer.from(config.teamAccessCode);
+  const supplied = Buffer.from(String(code));
+  return expected.length === supplied.length && crypto.timingSafeEqual(expected, supplied);
+}
+
+export function createTeamAccessToken() {
+  const expiresAt = Date.now() + TEAM_ACCESS_DAYS * 24 * 60 * 60 * 1000;
+  const payload = String(expiresAt);
+  const signature = crypto.createHmac('sha256', config.teamAccessSecret).update(payload).digest('hex');
+  return { token: `${payload}.${signature}`, expires: new Date(expiresAt) };
+}
+
+export function verifyTeamAccessToken(token) {
+  if (!token || !token.includes('.')) return false;
+  const [payload, signature] = token.split('.');
+  if (!/^\d+$/.test(payload) || Number(payload) < Date.now()) return false;
+  const expected = crypto.createHmac('sha256', config.teamAccessSecret).update(payload).digest('hex');
+  const a = Buffer.from(signature || '');
+  const b = Buffer.from(expected);
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
+export function setTeamAccessCookie(res, token, expires) {
+  const parts = [`team_access=${token}`, 'HttpOnly', 'Path=/', 'SameSite=Lax', `Expires=${expires.toUTCString()}`];
+  if (config.cookieSecure) parts.push('Secure');
+  res.setHeader('Set-Cookie', parts.join('; '));
+}
+
+export function clearTeamAccessCookie(res) {
+  const parts = ['team_access=', 'HttpOnly', 'Path=/', 'SameSite=Lax', 'Expires=Thu, 01 Jan 1970 00:00:00 GMT'];
+  if (config.cookieSecure) parts.push('Secure');
+  res.setHeader('Set-Cookie', parts.join('; '));
+}
+
 export function generateTempPassword() {
   // Human-friendly-ish random password, e.g. "b7k2-m9pq"
   const chars = 'abcdefghjkmnpqrstuvwxyz23456789';

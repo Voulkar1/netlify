@@ -1,5 +1,15 @@
 // Vanilla JS enhancements — no build step, no dependencies.
 (function () {
+  const search = document.getElementById('employee-search');
+  if (search) {
+    search.addEventListener('input', () => {
+      const term = search.value.trim().toLowerCase();
+      document.querySelectorAll('[data-employee-name]').forEach((row) => {
+        row.hidden = term && !row.dataset.employeeName.includes(term);
+      });
+    });
+  }
+
   const grid = document.getElementById('schedule-grid');
   if (!grid) return;
 
