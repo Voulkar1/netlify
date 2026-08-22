@@ -53,7 +53,13 @@ export default async (req, _context) => {
 };
 
 export const config = {
-  // Static files in /public (styles.css, app.js) are served directly by
-  // Netlify's CDN and take precedence over this catch-all function route.
   path: '/*',
+  // Netlify runs a function for every request matching `path`, even when a
+  // static file exists at that URL — the default is function-wins, not
+  // CDN-wins. Without `preferStatic`, this catch-all swallows /styles.css and
+  // /app.js, the router has no route for them, and the browser gets the
+  // router's own HTML 404 instead of the asset (an unstyled page).
+  // `preferStatic` lets the CDN serve publish-directory files first and only
+  // falls through to this function when no file matches.
+  preferStatic: true,
 };
