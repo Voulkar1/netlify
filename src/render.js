@@ -79,6 +79,22 @@ ${body}
 </html>`;
 }
 
+export function teamLayout({ title, activePath = '', body }) {
+  const items = [
+    { href: '/team/schedule', label: 'This Week' },
+    { href: '/team/tools', label: 'Tools & Calculators' },
+  ];
+  const nav = items
+    .map(
+      (item) =>
+        `<a class="navlink${activePath.startsWith(item.href) ? ' active' : ''}" href="${item.href}">${item.label}</a>`
+    )
+    .join('');
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${esc(title)} · DRVPV</title><link rel="stylesheet" href="/styles.css"></head><body>
+  <header class="topbar"><div class="topbar-inner"><a class="brand" href="/team"><span class="brand-mark">D</span> DRVPV</a><nav class="nav">${nav}</nav><form method="POST" action="/team/logout" class="inline-form"><button class="btn btn-ghost btn-sm" type="submit">Exit portal</button></form></div></header>
+  <main class="page">${body}</main><script src="/app.js"></script></body></html>`;
+}
+
 export function redirect(res, location) {
   res.writeHead(302, { Location: location });
   res.end();

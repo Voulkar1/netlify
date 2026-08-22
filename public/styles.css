@@ -1,17 +1,17 @@
 :root {
-  --surface: #fcfcfb;
-  --page: #f9f9f7;
-  --ink: #0b0b0b;
-  --ink-secondary: #52514e;
-  --ink-muted: #898781;
-  --gridline: #e1e0d9;
-  --baseline: #c3c2b7;
+  --surface: #fffdf8;
+  --page: #f8f4eb;
+  --ink: #26312c;
+  --ink-secondary: #58635d;
+  --ink-muted: #7b847e;
+  --gridline: #e6e1d6;
+  --baseline: #c9c5b9;
   --border: rgba(11, 11, 11, 0.1);
-  --brand: #2a78d6;
-  --brand-ink: #184f95;
+  --brand: #285b47;
+  --brand-ink: #173f31;
   --danger: #d03b3b;
   --good: #0ca30c;
-  --radius: 10px;
+  --radius: 14px;
   --radius-sm: 6px;
   --shadow: 0 1px 2px rgba(11, 11, 11, 0.06), 0 1px 1px rgba(11, 11, 11, 0.04);
   font-variant-numeric: proportional-nums;
@@ -28,7 +28,7 @@ body {
 }
 
 body {
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   background: var(--page);
   color: var(--ink);
   line-height: 1.45;
@@ -87,6 +87,7 @@ h2 {
   font-size: 1.05rem;
   white-space: nowrap;
 }
+.brand-mark { display:inline-grid; place-items:center; width:28px; height:28px; margin-right:7px; border-radius:8px; background:var(--brand); color:#fff; font-family:Georgia,serif; }
 
 .nav {
   display: flex;
@@ -110,7 +111,7 @@ h2 {
 
 .navlink.active {
   color: var(--ink);
-  background: #eef3fb;
+  background: #e8efe8;
   font-weight: 600;
 }
 
@@ -357,6 +358,57 @@ textarea {
   padding: 32px 28px;
   box-shadow: var(--shadow);
 }
+.back-link { display:block; margin-top:18px; text-align:center; font-size:.85rem; color:var(--ink-muted); text-decoration:none; }
+
+/* ---------- DRVPV access ---------- */
+.landing-shell { min-height:calc(100vh - 88px); display:grid; grid-template-columns:minmax(0, 540px) minmax(300px, 1fr); align-items:center; gap:clamp(40px,8vw,120px); max-width:1080px; margin:auto; }
+.welcome-panel { padding:clamp(10px,4vw,42px); }
+.eyebrow { margin:0 0 12px; color:var(--brand); font-size:.74rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+.welcome-panel h1 { font-family:Georgia, 'Times New Roman', serif; font-size:clamp(2.5rem,6vw,4.3rem); font-weight:500; line-height:1.03; color:var(--brand-ink); }
+.landing-copy { color:var(--ink-secondary); font-size:1.08rem; margin:18px 0 30px; }
+.access-form { display:grid; gap:14px; max-width:410px; }
+.access-form input { min-height:50px; padding:12px 14px; }
+.access-form .btn { min-height:48px; }
+.admin-link { max-width:410px; margin-top:26px; padding-top:20px; border-top:1px solid var(--gridline); display:flex; justify-content:space-between; gap:10px; font-size:.86rem; color:var(--ink-muted); }
+.admin-link a { color:var(--brand); font-weight:700; }
+.landing-art { min-height:520px; border-radius:32px; background:#e7eee5; position:relative; overflow:hidden; }
+.landing-art::before,.landing-art::after { content:''; position:absolute; border-radius:50%; }
+.landing-art::before { width:330px;height:330px;background:#efd5c6;right:-90px;top:-80px; }
+.landing-art::after { width:250px;height:250px;background:#d9deee;left:-70px;bottom:-80px; }
+.art-card { position:absolute; z-index:1; width:240px; padding:24px; border-radius:18px; box-shadow:0 16px 45px rgba(35,55,45,.10); }
+.art-card span { display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; color:var(--ink-muted); }
+.art-card strong { font-family:Georgia,serif; font-size:1.35rem; font-weight:500; line-height:1.25; }
+.art-card-sage { left:10%;top:18%;background:#fffdf8; }
+.art-card-peach { right:8%;bottom:15%;background:#fff8f1; }
+
+/* ---------- Team portal ---------- */
+.schedule-heading h1,.tool-grid h2 { color:var(--brand-ink); }
+.schedule-toolbar { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:14px; }
+.schedule-toolbar .legend { margin:0; }
+.search-field input { width:min(280px,70vw); padding:10px 13px; border:1px solid var(--baseline); border-radius:9px; background:var(--surface); font:inherit; }
+.sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+.team-grid-wrap { max-height:calc(100vh - 270px); box-shadow:0 8px 30px rgba(35,55,45,.05); }
+.team-grid { min-width:880px; table-layout:fixed; }
+.team-grid th:first-child { width:190px; z-index:3; }
+.team-grid thead th { height:58px; text-align:center; z-index:2; }
+.team-grid thead .row-head { z-index:4; text-align:left; }
+.team-grid td { height:52px; padding:7px; text-align:center; }
+.readonly-cell { min-width:98px; }
+.schedule-status { display:inline-block; padding:4px 8px; border-radius:6px; font-size:.75rem; font-weight:800; letter-spacing:.03em; }
+.row-note { display:block; max-width:110px; margin:3px auto 0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:.68rem; color:var(--ink-secondary); }
+.not-set { color:#aaa89f; }
+.status-bg-ON,.status-select.status-ON { background:#e5f0e5; color:#315b3d; }
+.status-bg-OFF,.status-select.status-OFF { background:#f0efeb; color:#64635e; }
+.status-bg-HOLIDAY,.status-select.status-HOLIDAY { background:#e5edf4; color:#375c72; }
+.status-bg-LATE,.status-select.status-LATE { background:#f8ead5; color:#855f2d; }
+.status-bg-MIA,.status-select.status-MIA { background:#f4dfdc; color:#86483f; }
+.status-dot-ON{background:#6f9d78}.status-dot-OFF{background:#999992}.status-dot-HOLIDAY{background:#769aad}.status-dot-LATE{background:#d09b59}.status-dot-MIA{background:#bb746a}
+.tool-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.tool-card { min-height:210px; padding:26px; border-radius:16px; border:1px solid rgba(38,49,44,.07); }
+.tool-card h2 { margin-top:28px; font-family:Georgia,serif; font-size:1.35rem; }
+.tool-card p { color:var(--ink-secondary); }
+.tool-label { font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted); }
+.tint-sage{background:#e8efe5}.tint-blue{background:#e6edf2}.tint-lavender{background:#ece9f2}
 .auth-title {
   margin-bottom: 4px;
 }
@@ -710,4 +762,13 @@ textarea {
   .week-grid {
     grid-template-columns: 1fr;
   }
+  .landing-shell { display:block; min-height:auto; padding-top:8vh; }
+  .welcome-panel { padding:8px; }
+  .landing-art { display:none; }
+  .admin-link { align-items:center; }
+  .schedule-toolbar { align-items:flex-start; flex-direction:column; }
+  .team-grid-wrap { max-height:calc(100vh - 320px); }
+  .tool-grid { grid-template-columns:1fr; }
+  .tool-card { min-height:170px; }
+  .userinfo { display:none; }
 }
